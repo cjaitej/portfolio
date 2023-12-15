@@ -1,0 +1,34 @@
+.home {
+  height: calc(100vh - 3rem);
+}
+
+.tittle {
+  font-family: "roboto";
+}
+
+.name {
+  color: #5468d1;
+  font-family: Chakra Petch;
+}
+
+.img {
+  width: 40vw;
+  z-index: 0;
+}
+
+.nav-header :hover {
+  color: #49adc3;
+}
+
+.home-button:hover {
+  background-color: white;
+}
+
+.skills:hover {
+  background-color: #111111;
+}
+
+.contact:hover {
+  background-color: white;
+  color: black;
+}

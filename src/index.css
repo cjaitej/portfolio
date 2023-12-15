@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  background-color: #232527;
+  font-family: "roboto";
+}
+
+body {
+  overflow: hidden;
+  overflow-y: auto;
+}
