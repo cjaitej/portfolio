@@ -6,11 +6,11 @@ import Project from "./pages/Project";
 import Skills from "./pages/Skills";
 import Certificate from "./pages/Certificate";
 import Contact from "./pages/Contact";
-import { HashRouter } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Navigator />
       <Home />
       <About />
@@ -18,7 +18,7 @@ function App() {
       <Project />
       <Certificate />
       <Contact />
-    </HashRouter>
+    </BrowserRouter>
   );
 }
 
