@@ -85,7 +85,7 @@ export default function Hero() {
           >
             <SectionLink
               id="work"
-              className="underline-grow group inline-flex items-center gap-2 pb-[3px] text-[0.9rem] text-ink"
+              className="underline-grow group inline-flex items-center gap-2 pb-0.75 text-[0.9rem] text-ink"
             >
               Selected work
               <Icon
@@ -96,16 +96,19 @@ export default function Hero() {
             </SectionLink>
 
             <a
-              className="underline-grow group inline-flex items-center gap-2 pb-[3px] text-[0.9rem] text-muted transition-colors duration-300 ease-brand hover:text-ink"
+              className="underline-grow group inline-flex items-center gap-2 pb-0.75 text-[0.9rem] text-muted transition-colors duration-300 ease-brand hover:text-ink"
               href={profile.resume}
               target="_blank"
               rel="noreferrer"
             >
               Resume
+              {/* arrow-up-right, not arrow-down: this opens the resume in
+                  Drive in a new tab, and a download glyph would promise a file
+                  that never arrives. */}
               <Icon
-                name="arrow-down"
+                name="arrow-up-right"
                 size={14}
-                className="transition-transform duration-400 ease-brand group-hover:translate-y-px"
+                className="transition-transform duration-400 ease-brand group-hover:translate-x-px group-hover:-translate-y-px"
               />
             </a>
           </div>
@@ -149,7 +152,7 @@ export default function Hero() {
               {profile.socials.map((s) => (
                 <li key={s.label}>
                   <a
-                    className="underline-grow pb-[2px] text-[0.82rem] text-muted transition-colors duration-300 ease-brand hover:text-ink"
+                    className="underline-grow pb-0.5 text-[0.82rem] text-muted transition-colors duration-300 ease-brand hover:text-ink"
                     href={s.href}
                     target={s.href.startsWith('http') ? '_blank' : undefined}
                     rel="noreferrer"
