@@ -138,6 +138,25 @@
        therefore cover the grid completely. */
     background: var(--color-bg);
     transition: background-color 0.4s var(--ease-brand);
+
+    /* Hidden, not disabled - the page still scrolls by wheel, trackpad,
+       keyboard, touch and anchor link; only the bar itself is gone.
+       Three declarations because no single one covers every engine: Firefox
+       reads scrollbar-width, WebKit and Blink need the pseudo-element, and
+       -ms-overflow-style is there for legacy Edge.
+
+       The affordance this removes is the page's only standing hint that there
+       is more below. The nav's scroll-progress hairline is what carries that
+       job instead, which is the reason it can be justified here. */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
   }
 
   body {
