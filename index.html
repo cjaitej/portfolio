@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Matches --bg in each theme, so the browser chrome does not sit against
+         a white strip on a dark page. -->
+    <meta name="theme-color" content="#fcfcfb" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0c0c0b" media="(prefers-color-scheme: dark)" />
+    <meta
+      name="description"
+      content="Jaitej — AI Engineer working on computer vision, deep learning and on-device ML. M.Tech at IIT Kanpur."
+    />
+    <title>Jaitej — AI Engineer</title>
+
+    <!-- 400/500/600 only. The display type is set at 500, so the 700-900 faces
+         the old design loaded for its bold headings are dead weight now. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      // Applied before first paint so the page never flashes the wrong theme.
+      try {
+        const saved = localStorage.getItem("theme");
+        const theme =
+          saved ||
+          (matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+        document.documentElement.dataset.theme = theme;
+      } catch {
+        document.documentElement.dataset.theme = "light";
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

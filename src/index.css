@@ -1,0 +1,435 @@
+@import 'tailwindcss';
+
+/* The site toggles [data-theme="dark"] on <html> itself (see useTheme.js), not
+   the OS preference, so Tailwind's default media-query-based `dark:` variant
+   is redefined to match. */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* ==========================================================================
+   Design tokens
+
+   The palette is deliberately monochrome. There is no accent hue anywhere on
+   the site: hierarchy comes from type scale, weight and hairline rules, and
+   emphasis from ink against paper. A single chromatic accent was what dated
+   the previous design more than anything else, so nothing here reintroduces
+   one - "highlight" states move, underline or darken instead of turning
+   violet.
+   ========================================================================== */
+
+:root {
+  /* Warm-neutral greys rather than blue-greys. Against pure white a cool grey
+     reads as "UI chrome"; a warm one reads as printed paper, which is the
+     register this design is going for. */
+  --ink: #14140f;
+  --ink-2: #3d3d38;
+  --muted: #6e6e67;
+  --faint: #a3a39b;
+
+  --bg: #fcfcfb;
+  --surface: #ffffff;
+  --surface-2: #f4f4f1;
+
+  --line: #e3e3de;
+  --line-strong: #cfcfc8;
+
+  /* The backdrop grid. Far fainter than --line: a rule the design draws on
+     purpose has to be legible, this one has to be almost subliminal - at any
+     strength where you can actually "see the grid" it stops reading as paper
+     and starts reading as a blueprint. */
+  --grid-line: rgba(20, 20, 15, 0.05);
+
+  /* The one hue on the site. It is allowed because it is the only place where
+     colour carries meaning rather than decoration - green reads as "open" at a
+     glance, in a way an ink-coloured dot never can. Deliberately kept to a
+     7px dot: the moment this palette appears anywhere else, the monochrome
+     rule stops being a rule. */
+  --status: #17a34a;
+  --status-glow: rgba(23, 163, 74, 0.5);
+  --status-glow-strong: rgba(23, 163, 74, 0.7);
+
+  color-scheme: light;
+}
+
+[data-theme='dark'] {
+  --ink: #f4f4f0;
+  --ink-2: #c6c6c0;
+  --muted: #91918a;
+  --faint: #6b6b65;
+
+  --bg: #0c0c0b;
+  --surface: #131312;
+  --surface-2: #1a1a18;
+
+  --line: #272725;
+  --line-strong: #3c3c38;
+
+  /* Slightly stronger than the light value: a light line on a near-black
+     ground carries less apparent contrast than a dark one on near-white at
+     the same alpha, so matching the numbers would make it vanish here. */
+  --grid-line: rgba(244, 244, 240, 0.055);
+
+  /* Lifted well above the light-mode green: #17a34a is chosen to hold its own
+     against near-white paper and goes muddy against near-black, where a
+     brighter, less saturated green is what actually reads as lit. */
+  --status: #3fe08d;
+  --status-glow: rgba(63, 224, 141, 0.45);
+  --status-glow-strong: rgba(63, 224, 141, 0.72);
+
+  color-scheme: dark;
+}
+
+/* Bridges the tokens above into Tailwind's namespaces so `bg-surface`,
+   `text-muted`, `border-line` etc. exist as utilities and stay correct across
+   a theme switch - each resolves to var(--ink) and friends at paint time
+   rather than to whatever value was live when the class was generated. */
+@theme inline {
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+}
+
+/* Never changes with the theme, so it resolves once at build time. */
+@theme {
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+
+  /* One easing curve for every transition on the site. */
+  --ease-brand: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Layout constants. One centred column - the fixed left rail is gone, and with
+   it the asymmetric padding and bleed maths the old layout needed to keep a
+   rail-plus-content block centred. */
+:root {
+  --page: 1180px;
+  --pad: clamp(1.25rem, 5vw, 4rem);
+  --nav-h: 4.5rem;
+
+  /* One backdrop grid cell. The drift keyframe translates by exactly this, so
+     the loop is seamless - change it here and the animation stays seamless. */
+  --grid-cell: 64px;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Clears the sticky nav plus a little air, so an anchored section never
+       lands with its heading tucked under the bar. */
+    scroll-padding-top: calc(var(--nav-h) + 1.5rem);
+    -webkit-text-size-adjust: 100%;
+
+    /* The page colour lives here rather than on <body> so the backdrop grid
+       has somewhere to sit. The grid is body::before at z-index -1, which
+       paints in the root stacking context's negative layer - above the root
+       element's own background, but below every in-flow block background that
+       follows it. A background on <body> paints in that later step and would
+       therefore cover the grid completely. */
+    background: var(--color-bg);
+    transition: background-color 0.4s var(--ease-brand);
+  }
+
+  body {
+    font-family: var(--font-sans);
+    color: var(--color-ink);
+    background: transparent;
+    overflow-x: hidden;
+    font-synthesis-weight: none;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    transition: color 0.4s var(--ease-brand);
+  }
+
+  /* ---- Backdrop grid --------------------------------------------------- */
+
+  /* Fixed rather than scrolling with the page: the content then travels over a
+     stationary field, which reads as depth without anything having to move
+     fast enough to notice. The drift is one full cell over 72s - about
+     0.9px/second - so it is change you register rather than motion you watch.
+     Translating (compositor-only) instead of animating background-position
+     keeps this off the paint path entirely. */
+  body::before {
+    content: '';
+    position: fixed;
+    /* Oversized by more than one cell so the translate never walks an edge
+       into view. */
+    inset: -80px;
+    z-index: -1;
+    pointer-events: none;
+
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: var(--grid-cell) var(--grid-cell);
+
+    /* Strongest toward the top-right and gone by the lower-left, so the grid
+       fills the open area beside the headline and stays out of the way under
+       the dense left-hand column. */
+    -webkit-mask-image: radial-gradient(125% 105% at 72% 0%, #000 5%, transparent 72%);
+    mask-image: radial-gradient(125% 105% at 72% 0%, #000 5%, transparent 72%);
+
+    animation: grid-drift 72s linear infinite;
+  }
+
+  /* Display type is set at 500-600, not 700-800. At the sizes this design uses
+     a heavy weight reads as shouting; the size is already doing the work, so
+     the weight can stay conversational. */
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    line-height: 1.06;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Monochrome, like everything else - a coloured ring would be the one bit of
+     hue on the site. Offset keeps it clear of the text it is marking. */
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-bg);
+  }
+
+  main:focus {
+    outline: none;
+  }
+}
+
+/* ==========================================================================
+   Layout primitives
+
+   Kept as classes rather than inlined per-usage: each is shared across most
+   files in src/components, and repeating the same handful of utilities in
+   every one would be the duplication these exist to remove. Component-specific
+   styling lives as Tailwind utilities directly in the JSX.
+   ========================================================================== */
+
+@layer components {
+  /* One content box for the whole page, so every section lines up on the same
+     two edges from the nav down to the footer. */
+  .shell {
+    width: 100%;
+    max-width: var(--page);
+    margin-inline: auto;
+    padding-inline: var(--pad);
+  }
+
+  /* Vertical rhythm is generous on purpose: whitespace is the main structural
+     device once the cards, shadows and artwork are gone. Capped at 6.5rem
+     rather than 8 - two adjacent sections each contribute their own padding,
+     so the ceiling is really twice this, and at 8rem the gap between one
+     section's last row and the next one's rule read as the page having ended. */
+  .section {
+    padding-block: clamp(3.5rem, 6vw, 6.5rem);
+  }
+
+  /* The uppercase micro-label that opens each section and titles each meta
+     block. Used often enough, and with enough properties, to be worth a name. */
+  .label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-faint);
+  }
+
+  /* Hairline rules do the dividing everywhere a border-plus-shadow card used
+     to. `.rule` is the full-width section divider. */
+  .rule {
+    border: 0;
+    border-top: 1px solid var(--color-line);
+    margin: 0;
+  }
+
+  /* The availability indicator. The glow breathes rather than the dot
+     expanding: a ring pinging outward is a notification pattern and pulls far
+     more attention than a status deserves, where a slow swell reads as
+     something quietly on. */
+  .status-dot {
+    flex: none;
+    width: 7px;
+    height: 7px;
+    border-radius: 9999px;
+    background: var(--status);
+    box-shadow: 0 0 5px 0 var(--status-glow);
+    animation: status-glow 2.8s ease-in-out infinite;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 1rem;
+    top: -100%;
+    z-index: 200;
+    padding: 0.7rem 1.1rem;
+    background: var(--color-ink);
+    color: var(--color-bg);
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .skip-link:focus {
+    top: 1rem;
+  }
+
+  /* A text link that grows its underline from the left on hover, rather than
+     changing colour - the monochrome palette's substitute for a hover hue.
+     background-size is animated (not the underline itself) because
+     text-decoration cannot be transitioned. */
+  .underline-grow {
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 1px;
+    transition: background-size 0.4s var(--ease-brand);
+  }
+
+  .underline-grow:hover,
+  .underline-grow:focus-visible {
+    background-size: 100% 1px;
+  }
+}
+
+/* ==========================================================================
+   Entrance motion (on load)
+
+   The hero is above the fold, so it cannot wait on a scroll observer - these
+   are plain CSS animations that run on first paint, staggered by an inline
+   animation-delay from the JSX.
+
+   Each keyframe declares only `from`. The implicit `to` is the element's own
+   computed style, and `both` holds the `from` state before the delay elapses,
+   so nothing has to be duplicated between the CSS and the resting design.
+   ========================================================================== */
+
+@keyframes status-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 5px 0 var(--status-glow);
+  }
+  50% {
+    box-shadow: 0 0 11px 2px var(--status-glow-strong);
+  }
+}
+
+/* Exactly one cell, so the grid lands back on itself and the loop is invisible. */
+@keyframes grid-drift {
+  to {
+    transform: translate3d(var(--grid-cell), var(--grid-cell), 0);
+  }
+}
+
+@keyframes rise {
+  from {
+    transform: translateY(110%);
+  }
+}
+
+@keyframes enter-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+@layer components {
+  /* A headline line that rises out of its own clipping box. The mask is the
+     parent; this is the thing that moves inside it. */
+  .rise-mask {
+    display: block;
+    overflow: hidden;
+    /* Without this the mask crops the descenders of g, y and p - the bottom of
+       "Deep learning" would be shaved off. The negative margin gives the room
+       back so the line box is unchanged. */
+    padding-bottom: 0.14em;
+    margin-bottom: -0.14em;
+  }
+
+  .rise-mask > * {
+    display: block;
+    animation: rise 1.1s var(--ease-brand) both;
+  }
+
+  .enter {
+    animation: enter-up 0.9s var(--ease-brand) both;
+  }
+}
+
+/* ==========================================================================
+   Scroll reveal
+   ========================================================================== */
+
+/* Driven by --reveal-delay, set per-instance from JS (see Reveal.jsx) - which
+   makes it a poor fit for a plain utility class, since one can only carry a
+   value baked in at the call site, not computed per element at runtime.
+   The travel is deliberately short (10px): a long slide is the kind of motion
+   this design is meant to have less of. */
+@layer components {
+  .reveal {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.8s var(--ease-brand), transform 0.8s var(--ease-brand);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* A hairline that draws itself left-to-right as the section arrives. Every
+     section opens on a rule, so this is the page's most repeated bit of
+     motion - it stays slow and quiet for that reason. Opacity is left alone:
+     a rule fading in as it draws reads as two effects competing. */
+  .reveal-rule {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1s var(--ease-brand);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal-rule.is-visible {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .reveal,
+  .reveal-rule {
+    opacity: 1;
+    transform: none;
+  }
+}

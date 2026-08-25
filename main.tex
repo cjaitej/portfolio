@@ -1,0 +1,229 @@
+\documentclass[10pt]{extarticle}
+\usepackage{mathptmx} % Times New Roman -- SPO approved font list
+\usepackage[margin=0.6in]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage[most]{tcolorbox}
+\usepackage{fontawesome5}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=black,
+    pdfauthor={Choudam Jaitej},
+    pdftitle={Choudam Jaitej - Resume},
+    pdfsubject={Resume},
+}
+
+\setlist[itemize,1]{leftmargin=14pt, label=$\bullet$, topsep=1pt, itemsep=1pt, parsep=0pt}
+\setlist[itemize,2]{leftmargin=14pt, label=$\circ$, topsep=1pt, itemsep=1pt, parsep=0pt}
+\setlength{\parskip}{2pt}
+\linespread{1.0}
+
+\tcbset{
+    colback=gray!20,
+    colframe=gray!20,
+    boxrule=0pt,
+    arc=0pt,
+    outer arc=0pt,
+    left=5pt,
+    right=5pt,
+    top=2pt,
+    bottom=2pt,
+    boxsep=0pt,
+    width=\textwidth
+}
+\newcommand{\sectionheader}[1]{
+    \vspace{3pt}
+    \begin{tcolorbox}
+        \textbf{\large #1}
+    \end{tcolorbox}
+    \vspace{2pt}
+}
+
+\begin{document}
+\pagestyle{empty}
+
+% --- HEADER ---
+% Name is set at 20pt against 10pt body content, satisfying the "at least double" rule.
+\noindent
+\begin{minipage}[t]{0.7\textwidth}
+{\fontsize{20}{24}\selectfont\textbf{Choudam Jaitej}}\\[2pt]
+\small M.Tech, Computer Science and Engineering\\[1pt]
+\small Indian Institute of Technology Kanpur
+\end{minipage}%
+\begin{minipage}[t]{0.3\textwidth}
+\raggedleft
+\small \faGithub\ \href{https://github.com/cjaitej}{github.com/cjaitej}\\[2pt]
+\small \faLinkedin\ \href{https://www.linkedin.com/in/cjaitej/}{linkedin.com/in/cjaitej}\\[2pt]
+\small \faGlobe\ \href{http://localhost:5173/}{Portfolio}
+\end{minipage}
+\vspace{2pt}
+
+\noindent\rule{\linewidth}{0.7pt}
+\vspace{3pt}
+
+% --- EDUCATION ---
+\sectionheader{Education}
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.25}
+\noindent
+\begin{tabularx}{\textwidth}{|c|>{\raggedright\arraybackslash}X|c|}
+\hline
+\textbf{Year} & \textbf{Degree \& Institute} & \textbf{CPI/\%} \\
+\hline
+2025 - Present & M.Tech, Computer Science and Engineering, Indian Institute of Technology, Kanpur & 8.41/10 \\
+\hline
+2020 - 2024 & B.Tech, Computer Science, Gandhi Institute of Technology and Management, Hyderabad & 9.23/10 \\
+\hline
+2020 & Intermediate (TSBIE), Sri Chaitanya Junior Kalasala, Hyderabad & 94.8\% \\
+\hline
+2018 & 10th (TBSE), Don Bosco High School, Hyderabad & 9.0/10 \\
+\hline
+\end{tabularx}
+
+% --- M TECH THESIS ---
+\sectionheader{Research Experience}
+\begin{itemize}
+    \item \textbf{Efficient IMU-Based Inertial Odometry for Patient Tracking} \textit{(Ongoing)} \hfill \textit{(May 2026 -- Present)}\\
+    Guided by: Prof. Priyanka Bagade, Department of Computer Science and Engineering, IIT Kanpur
+    \begin{itemize}
+        \item Designed \textbf{Efficient YOLOv26-1D}, a lightweight IMU-based inertial odometry backbone with \textbf{598K parameters} (\textbf{7.7x fewer} than \textbf{RoNIN ResNet}), and benchmarked it against RoNIN ResNet and four compact architectures.
+        \item Developed a \textbf{Stage-2 Random Forest} velocity refinement pipeline that reduced error from 4.16m to \textbf{3.58m ATE} and 3.15m to \textbf{2.61m RTE}, improving the backbone by \textbf{13.9\%} and \textbf{17.2\%}, respectively.
+        \item Outperformed every sub-1M-parameter benchmark model, including \textbf{ShuffleNetV2-1D}, \textbf{TinyCNN-1D}, and \textbf{LightTCN-1D}, while surpassing the \textbf{RoNIN ResNet} baseline on the seen test set.
+        \item Validated performance on a held-out unseen test set with \textbf{5.90m ATE} and \textbf{4.73m RTE}, and evaluated \textbf{Random Forest}, \textbf{Ridge Regression}, \textbf{EMA}, \textbf{MLP}, and \textbf{TCN} refinement heads under on-device latency and memory constraints.
+    \end{itemize}
+\end{itemize}
+
+% --- WORK EXPERIENCE ---
+\sectionheader{Work Experience}
+\begin{itemize}
+    \item \textbf{CBRE India $|$ Associate Software Engineer} \hfill \textit{(Jan 2024 -- Jul 2025)}
+    \begin{itemize}
+        \item Built and deployed an NLP-based duplicate detection system using \textbf{Sentence-BERT} embeddings and cosine similarity to analyze \textbf{200K+ work orders}, reducing duplicate records by \textbf{30\%}.
+        \item Developed an end-to-end \textbf{XGBoost} regression model with reusable preprocessing pipelines, feature engineering, hyperparameter tuning, and model evaluation, improving work order completion-time prediction accuracy by \textbf{11\%}.
+        \item Contributed to the development of \textbf{5 Tableau dashboards} across revenue, operations, and client performance, and conducted end-to-end testing and validation to ensure data accuracy and functionality.
+    \end{itemize}
+\end{itemize}
+
+% --- PROJECTS ---
+\sectionheader{Key Projects}
+\begin{itemize}[itemsep=7pt]
+    \item \textbf{\href{https://github.com/cjaitej/Ask-IITK}{AskIITK: Cited Retrieval-Augmented Q\&A over Official IITK Sources}} $|$ \textbf{Self Project} \hfill \textit{(Jun 2026 -- Aug 2026)}
+    \begin{itemize}
+        \item Built a \textbf{RAG} assistant that answers IIT Kanpur queries exclusively from official institute sources with verifiable inline \textbf{citations}, engineered around exact \textbf{course-code matching}, temporal grounding, and context-aware follow-up resolution without an additional LLM call.
+        \item Developed a retrieval-augmented Q\&A system for IIT Kanpur that grounds every answer in official sources with inline \textbf{citations}, combining exact \textbf{course-code matching}, temporal awareness for current-year queries, and follow-up resolution that avoids an extra LLM call.
+        \item Optimized retrieval with \textbf{BGE-Small} (384-dim) \textbf{float16} embeddings and a \textbf{source diversification} pipeline, improving search efficiency despite an index where \textbf{88\%} of documents were course pages.
+        \item Tackled a corpus skewed \textbf{88\%} toward course pages by building a \textbf{source diversification} pipeline alongside \textbf{BGE-Small} (384-dim) \textbf{float16} embeddings, improving retrieval efficiency without sacrificing coverage of non-course sources.
+        \item Built and deployed the complete \textbf{FastAPI} backend on \textbf{Azure Container Apps}.
+        \item Shipped the end-to-end \textbf{FastAPI} service to production on \textbf{Azure Container Apps}.
+    \end{itemize}
+    \item \textbf{\href{https://github.com/cjaitej/CoreGPT}{CoreGPT: GPT-2 Architectural Ablation Study}} $|$ \textbf{Self Project} \hfill \textit{(Jun 2026 -- Jul 2026)}
+    \begin{itemize}
+        \item Trained three \textbf{30M-parameter} GPT-2 models on \textbf{524M} FineWeb-Edu tokens under identical conditions, isolating the impact of \textbf{RoPE}, \textbf{RMSNorm}, and \textbf{KV Cache}.
+        \item Built a modular GPT-2 experimentation framework enabling \textbf{RoPE}, \textbf{RMSNorm}, and \textbf{KV Cache} to be toggled independently, then trained three \textbf{30M-parameter} models on \textbf{524M} FineWeb-Edu tokens under identical conditions to measure each change in isolation rather than stacking optimizations.
+        \item \textbf{RoPE} reduced validation perplexity by \textbf{11.6\%} (57.33 to 50.66) while removing 196K parameters, and \textbf{RMSNorm} improved training throughput by \textbf{12\%} (40.4K to 45.3K tok/s) without sacrificing accuracy.
+        \item Found that \textbf{RoPE} alone drove nearly all the quality gains, cutting validation perplexity by \textbf{11.6\%} (57.33 to 50.66) and 196K parameters, while \textbf{RMSNorm} held accuracy steady and lifted training throughput by \textbf{12\%} (40.4K to 45.3K tok/s).
+        \item Benchmarked \textbf{KV Cache} across CPU and GPU, achieving \textbf{38.5x faster CPU decoding} and reducing prefill latency by \textbf{3.2x} (63.9ms to 6.2ms).
+        \item Profiled the inference pipeline to find hidden bottlenecks, then benchmarked \textbf{KV Cache} across CPU and GPU --- delivering up to \textbf{38.5x faster CPU decoding} and negligible GPU gains, while cutting prefill latency by \textbf{3.2x} (63.9ms to 6.2ms) and restoring expected T4 GPU performance.
+        \item Built an interactive \textbf{Streamlit} interface to compare all three GPT variants on the same prompt, and deployed it on \textbf{Azure Container Apps} with scale-to-zero hosting, enabling CPU-only inference while minimizing idle infrastructure costs.
+        \item Shipped an interactive \textbf{Streamlit} demo for side-by-side comparison of all three GPT variants, deployed on \textbf{Azure Container Apps} with scale-to-zero hosting to keep idle infrastructure costs minimal while serving CPU-only inference.
+    \end{itemize}
+    \item \textbf{\href{https://github.com/cjaitej/Solar-Wind-Space-Weather-Analytics}{Solar Wind \& Space Weather Analytics}} $|$ \textbf{Course Project} \hfill \textit{(May 2026 -- Jun 2026)}\\
+    Guided by: Soumya Dutta (CS661)
+    \begin{itemize}
+        \item Built an interactive visual analytics dashboard for \textbf{31 years} (1995--2025) of NASA OMNI space weather data, enabling exploration of \textbf{271,752 hourly records} through linked visualizations.
+        \item Developed a linked-visualization dashboard covering \textbf{31 years} (1995--2025) of NASA OMNI space weather data, making \textbf{271,752 hourly records} explorable interactively.
+        \item Engineered a data pipeline that transformed NASA's raw 47-column datasets into analysis-ready data and automatically identified \textbf{676 geomagnetic storms} from historical measurements.
+        \item Built a data pipeline converting NASA's raw 47-column measurements into analysis-ready form, with automatic detection surfacing \textbf{676 geomagnetic storms} from the historical record.
+        \item Developed an \textbf{Orbital Exposure Simulator} that computes the magnetopause boundary from real solar wind measurements and estimates radiation exposure across LEO, MEO, GEO, and Polar satellite orbits.
+        \item Built an \textbf{Orbital Exposure Simulator} estimating radiation exposure across LEO, MEO, GEO, and Polar satellite orbits by computing the magnetopause boundary directly from real solar wind measurements.
+        \item Designed custom visualizations --- including shock-aligned storm comparison, seasonal activity analysis, and a hand-built Sankey diagram --- to make long-term space weather patterns easier to interpret.
+        \item Created custom visualizations, including a shock-aligned storm comparison view, seasonal activity breakdowns, and a hand-built Sankey diagram, to surface long-term space weather patterns that standard charts would miss.
+        \item Optimized the backend by precomputing heavy aggregations at startup, keeping a \textbf{271K-row (92MB)} dataset responsive in a \textbf{React + D3} application without requiring a database.
+        \item Kept a \textbf{271K-row (92MB)} dataset responsive inside a \textbf{React + D3} frontend by precomputing heavy aggregations at startup, avoiding the need for a database entirely.
+    \end{itemize}
+    \item \textbf{\href{https://github.com/cjaitej/SpendWise}{SpendWise: AI-Powered Expense Tracking Application}} $|$ \textbf{Self Project} \hfill \textit{(Apr 2026 -- Jun 2026)}
+    \begin{itemize}
+        \item Built an \textbf{AI}-powered expense tracker that converts bank SMS into structured transactions using \textbf{on-device NLP}, preserving user privacy through local-first processing.
+        \item Developed an \textbf{AI}-powered expense tracker that parses bank SMS into structured transactions with \textbf{on-device NLP}, keeping all processing local-first to preserve user privacy.
+        \item Collected and annotated \textbf{4,361 financial SMS records} across \textbf{748 merchants}, then fine-tuned a \textbf{TinyBERT NER} model achieving \textbf{97\% merchant extraction accuracy} and optimized on-device inference with \textbf{ONNX Runtime}.
+        \item Manually labeled \textbf{4,361 financial SMS records} spanning \textbf{748 merchants} to fine-tune a \textbf{TinyBERT NER} model to \textbf{97\% merchant extraction accuracy}, then optimized it for on-device inference using \textbf{ONNX Runtime}.
+        \item Optimized the model with \textbf{ONNX Runtime} for efficient on-device inference, and designed a \textbf{privacy-first} architecture where SMS processing stays local, with optional \textbf{Supabase}-backed cloud sync for users who choose it.
+        \item Architected the system privacy-first, keeping SMS processing entirely on-device by default while offering optional \textbf{Supabase}-backed cloud sync for users who want it.
+        \item Developed a \textbf{RAG}-powered financial assistant that answers natural-language questions about spending habits, budgets, and transaction history using the user's own expense data.
+        \item Built a \textbf{RAG}-powered assistant that lets users ask natural-language questions about their own spending habits, budgets, and transaction history and get grounded answers from their expense data.
+        \item Engineered the end-to-end product with \textbf{React Native} and \textbf{Supabase Authentication}, and built an interactive dashboard featuring KPIs, spending trends, and budget insights for real-time financial monitoring.
+        \item Shipped the full product end-to-end on \textbf{React Native} with \textbf{Supabase Authentication}, including an interactive dashboard surfacing KPIs, spending trends, and budget insights for real-time financial monitoring.
+    \end{itemize}
+    \item \textbf{\href{https://github.com/cjaitej/Disaster-Damage-Assessment-Using-Vision-Transformers}{Disaster Damage Assessment using Hybrid Attention Transformers}} $|$ \textbf{Course Project} \hfill \textit{(Jan 2026 -- Mar 2026)}\\
+    Guided by: Prof. Priyanka Bagade, Department of Computer Science and Engineering, IIT Kanpur (CS776)
+    \begin{itemize}
+        \item Built a \textbf{Hybrid Attention Transformer (HAT)} for post-disaster UAV segmentation with local/global attention, a learnable fusion gate, a \textbf{U-Net decoder} with gated skip connections and boundary refinement, and trained on \textbf{3,595 images} across \textbf{11 classes}.
+        \item Designed a \textbf{Hybrid Attention Transformer (HAT)} combining local overlapping cross-attention with global sparse attention through a learnable fusion gate to capture both fine detail and long-range scene context, paired with a \textbf{U-Net-style decoder} using gated skip connections and a boundary refinement module to sharpen object edges; trained the pipeline on \textbf{3,595 UAV images} across \textbf{11 damage and terrain classes} using focal + Lov\'{a}sz segmentation loss, auxiliary supervision, boundary-aware optimization, and cosine-annealed AdamW.
+        \item Achieved \textbf{77.35\% mIoU} on RescueNet dataset, outperforming a Segmenter by \textbf{13.51\%} (77.35 vs. 63.84) at \textbf{384x384}.
+        \item Reached \textbf{77.35\% mIoU} on the RescueNet benchmark at \textbf{384x384} resolution, beating a Segmenter baseline by \textbf{13.51} points (77.35 vs. 63.84) at the same input size.
+        \item Outperformed a 713x713 Segmenter on small-object vehicle segmentation (\textbf{75.27 vs. 66.69 IoU}) while reducing latency from 67.5ms to \textbf{44ms}.
+        \item Demonstrated that architectural improvements, not higher input resolution, drove performance --- outperforming a 713x713 Segmenter on vehicle segmentation (\textbf{75.27 vs. 66.69 IoU}) while reducing inference latency from 67.5ms to \textbf{44ms} for real-time disaster response.
+    \end{itemize}
+    \item \textbf{\href{https://github.com/cjaitej/Face-Generation-using-Diffusion-Model}{Diffusion-Based Facial Synthesis with Conditioning}} $|$ \textbf{Self Project} \hfill \textit{(May 2025 -- Jun 2025)}
+    \begin{itemize}
+        \item Built \textbf{FaceForge}, a \textbf{21.3M-parameter} conditional \textbf{DDPM} from scratch that generates CelebA faces conditioned on \textbf{10 user-selected attributes} using classifier-free guidance, with a custom conditioning pipeline and an optimized U-Net using low-resolution self-attention and nearest-neighbor upsampling.
+        \item Built \textbf{FaceForge}, a \textbf{21.3M-parameter} conditional \textbf{DDPM} from scratch generating CelebA faces matching user-selected attributes such as gender, age, hair color, glasses, and facial hair via classifier-free guidance; embedded all \textbf{10 CelebA attributes} into the diffusion process for controllable generation instead of random face synthesis, and optimized the U-Net by restricting self-attention to low-resolution feature maps and swapping transposed convolutions for nearest-neighbor upsampling to reduce computation while avoiding visual artifacts.
+        \item Achieved an \textbf{FID of 14.07} with the DDPM model, and accelerated generation with \textbf{50-step DDIM sampling}, delivering \textbf{20x faster} inference than the standard 1000-step diffusion process.
+        \item Evaluated generation quality with FID and Inception Score, reaching an \textbf{FID of 14.07}, and used \textbf{50-step DDIM sampling} to deliver \textbf{20x faster} inference than the standard 1000-step diffusion process while maintaining image quality.
+        \item Enabled multi-GPU training with \textbf{PyTorch Data Parallel} to accelerate model training.
+        \item Accelerated model training by enabling multi-GPU training via \textbf{PyTorch Data Parallel}.
+    \end{itemize}
+    \item \textbf{\href{https://github.com/cjaitej/Self-Driving-Cars}{Autonomous Driving Scene Understanding using Attention U-Net}} $|$ \textbf{Self Project} \hfill \textit{(Oct 2024 -- Dec 2024)}
+    \begin{itemize}
+        \item Built a dual-task perception pipeline for autonomous driving that performs semantic segmentation and monocular depth estimation from a shared encoder-decoder backbone, enabling simultaneous scene understanding and distance estimation.
+        \item Designed a shared encoder-decoder backbone that jointly performs semantic segmentation and monocular depth estimation for autonomous driving, enabling simultaneous scene understanding and distance estimation from a single pipeline.
+        \item Improved segmentation quality by extending U-Net with \textbf{attention gates} in skip connections, allowing the model to focus on relevant regions instead of passing all features directly to the decoder.
+        \item Extended U-Net's skip connections with \textbf{attention gates} so the model learns to focus on relevant regions, improving segmentation quality over passing all features directly to the decoder.
+        \item Trained the pipeline on the \textbf{Cityscapes} dataset of \textbf{5,000 finely annotated} stereo images across \textbf{30 semantic classes}, optimizing segmentation and depth jointly with \textbf{AdamW} over 3,000 epochs.
+        \item Jointly optimized segmentation and depth estimation with \textbf{AdamW} over 3,000 epochs, training on the \textbf{Cityscapes} dataset's \textbf{5,000 finely annotated} stereo images spanning \textbf{30 semantic classes}.
+        \item Achieved \textbf{91.64\% test segmentation accuracy}, \textbf{91.38\% F1-score}, and \textbf{0.018 MAE} for depth estimation, demonstrating strong generalization on held-out driving scenes.
+        \item Demonstrated strong generalization on held-out driving scenes, reaching \textbf{91.64\% test segmentation accuracy}, a \textbf{91.38\% F1-score}, and \textbf{0.018 MAE} on depth estimation.
+        \item Built an end-to-end validation pipeline with \textbf{PyTorch}, Matplotlib, and Plotly, enabling frame-by-frame visualization of segmentation masks and depth maps for real-world driving footage.
+        \item Enabled frame-by-frame visualization of segmentation masks and depth maps on real-world driving footage through an end-to-end validation pipeline built with \textbf{PyTorch}, Matplotlib, and Plotly.
+    \end{itemize}
+\end{itemize}
+
+% --- TECHNICAL SKILLS ---
+\sectionheader{Technical Skills}
+\begin{itemize}
+    \item \textbf{Languages:} Python, C++, SQL, TypeScript, JavaScript
+    \item \textbf{AI/ML:} PyTorch, TensorFlow, Scikit-learn, Transformers, Hugging Face, LangChain, RAG
+    \item \textbf{Domains:} Computer Vision, NLP, Deep Learning, Backend, Frontend
+    \item \textbf{Tools:} Docker, Linux, Git, React Native, React, Snowflake, Azure, Postman, FastAPI, Supabase, postgresql, MySql
+\end{itemize}
+
+% --- RELEVANT COURSES ---
+\sectionheader{Relevant Courses}
+\begin{itemize}
+    \item \textbf{M.Tech:} Introduction to Machine Learning, Big Data Visual Analytics, Deep Learning for Computer Vision, Gen AI, Parallel Computing
+    \item \textbf{B.Tech:} Artificial Intelligence, Statistics, Linear Algebra, Calculus, Object-Oriented Programming, Data Structures and Algorithms, Operating Systems, Computer Networks, Database Management
+\end{itemize}
+
+% --- CERTIFICATIONS ---
+\sectionheader{Certifications}
+\begin{itemize}
+    \item \textbf{\href{https://www.coursera.org/account/accomplishments/certificate/TNP63BH8PYW7}{NLP with Sequence Models}} — DeepLearning.AI
+    \item \textbf{\href{https://www.coursera.org/account/accomplishments/certificate/UTEFQXRPJP76}{Convolutional Neural Networks}} — DeepLearning.AI
+    \item \textbf{\href{https://www.coursera.org/account/accomplishments/certificate/JANNQ88BE859}{Data Structures}} — University of California San Diego
+    \item \textbf{\href{https://www.coursera.org/account/accomplishments/certificate/Z3KZ66E3JRSU}{Neural Networks \& Deep Learning}} — DeepLearning.AI
+    \item \textbf{\href{https://www.coursera.org/account/accomplishments/certificate/8UCEFE3JR82M}{Python for Data Science, AI \& Development}} — IBM
+\end{itemize}
+
+% --- POSITIONS OF RESPONSIBILITY ---
+\sectionheader{Positions of Responsibility}
+\begin{itemize}
+    \item \textbf{Teaching Assistant, ESC111 -- Fundamentals of Computing} \hfill \textit{(Aug 2025 -- Nov 2025)}\\
+    Indian Institute of Technology, Kanpur
+\end{itemize}
+
+\end{document}
