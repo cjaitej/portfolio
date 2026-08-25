@@ -1,0 +1,54 @@
+name: Deploy to GitHub Pages
+
+on:
+  # Every push to main republishes the site.
+  push:
+    branches: [main]
+  # Lets you re-run a deploy from the Actions tab without a new commit.
+  workflow_dispatch:
+
+# The token needs to be able to publish Pages and prove the artifact came from
+# this workflow run; `contents: read` is all the checkout needs.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race. cancel-in-progress stays false so an in-flight
+# publish is allowed to finish rather than leaving Pages half-updated.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Vite 8 requires Node 20.19+ / 22.12+.
+          node-version: '22'
+          cache: npm
+
+      # ci, not install: installs exactly what package-lock.json pins, so a
+      # deploy can never quietly pick up a different dependency than the one
+      # the site was built and tested against locally.
+      - run: npm ci
+
+      - run: npm run build
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
