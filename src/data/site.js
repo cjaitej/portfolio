@@ -22,7 +22,7 @@ export const profile = {
      replacing the file in Drive, and this URL keeps resolving to the current
      version. */
   resume:
-    'https://drive.google.com/file/d/1QNe4umfIf6hpxyE5Hob2A6xweXrYR_nd/view?usp=sharing',
+    'https://drive.google.com/file/d/1tCZvrRoNN8T0umd9XVbzVGD2N8qXBQZC/view?usp=sharing',
   socials: [
     { label: 'GitHub', icon: 'github', href: 'https://github.com/cjaitej' },
     { label: 'LinkedIn', icon: 'linkedin', href: 'https://linkedin.com/in/cjaitej' },
