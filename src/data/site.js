@@ -92,7 +92,13 @@ export const hero = {
    above the list, so it carries a lead sentence and figures the one-line rows
    have no room for. It keeps its place in this array, though, because the
    index numbers are taken from position here - which is what makes the
-   featured block 01 and the list start at 02. */
+   featured block 01 and the list start at 02.
+
+   `href` is always the source repo, and is always the row's primary link -
+   clicking the row itself goes there, same as every project. `demo` is
+   optional; where present, it adds a small visible "Live Demo" link alongside
+   the repo one, for the projects that have a hosted app to try rather than
+   just read. */
 export const projects = [
   {
     slug: 'spendwise',
@@ -108,6 +114,7 @@ export const projects = [
     ],
     tags: ['React Native', 'TinyBERT', 'ONNX Runtime', 'RAG', 'Supabase'],
     href: 'https://github.com/cjaitej/SpendWise',
+    demo: 'https://github.com/cjaitej/SpendWise/releases/tag/V1',
   },
   {
     slug: 'askiitk',
@@ -116,6 +123,7 @@ export const projects = [
     blurb: 'Cited RAG over official IITK sources — every answer traceable to a citation.',
     tags: ['RAG', 'FastAPI', 'Azure'],
     href: 'https://github.com/cjaitej/Ask-IITK',
+    demo: 'https://iitk-rag.proudbay-827b9367.centralindia.azurecontainerapps.io/ui',
   },
   {
     slug: 'coregpt',
@@ -124,6 +132,7 @@ export const projects = [
     blurb: 'GPT-2 ablation framework — RoPE alone cut perplexity 11.6% on an identical baseline.',
     tags: ['PyTorch', 'Transformers'],
     href: 'https://github.com/cjaitej/CoreGPT',
+    demo: 'https://coregpt.proudbay-827b9367.centralindia.azurecontainerapps.io/',
   },
   {
     slug: 'solar-wind-space-weather',
@@ -140,6 +149,7 @@ export const projects = [
     blurb: 'Hybrid Attention Transformer for aerial segmentation — 77.35% mIoU at 44ms.',
     tags: ['PyTorch', 'Segmentation'],
     href: 'https://github.com/cjaitej/Disaster-Damage-Assessment-Using-Vision-Transformers',
+    demo: 'https://rescueseg-c6d3e4hqe0huava7.eastasia-01.azurewebsites.net/',
   },
   {
     slug: 'diffusion-facial-synthesis',
@@ -148,6 +158,7 @@ export const projects = [
     blurb: 'Attribute-conditioned DDPM built from scratch — 14.07 FID, 20× faster with DDIM.',
     tags: ['PyTorch', 'Diffusion'],
     href: 'https://github.com/cjaitej/Face-Generation-using-Diffusion-Model',
+    demo: 'https://diffusion-app.proudbay-827b9367.centralindia.azurecontainerapps.io',
   },
   {
     slug: 'self-driving-perception',
